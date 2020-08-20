@@ -1,4 +1,5 @@
 // Binary Search Tree:
+// The travesal is based on Level Order Traversal
 // Breath-first search
 // This is an implementation of a tree, which may not be balanced
 // duplicates are allowed
@@ -16,12 +17,7 @@ class BST {
     }
     const curIndex = this.traverseTree(val, "lastPosition");
     tree[curIndex] = val;
-    console.log(
-      "updated tree:",
-      this.tree,
-      " & its length: ",
-      this.tree.length
-    );
+    console.log("updated tree:", this.tree, ", length: ", this.tree.length);
   }
 
   traverseTree(val, queryType = "lastPosition" | "exactMatch") {
@@ -41,16 +37,14 @@ class BST {
   }
 
   removeNode(val) {
-    // const curIndex = this.traverseTree(val, "exactMatch");
-    // console.log("removal index:", curIndex);
-    // // collect children of this node to move to new place
-    // const runningIndex = curIndex;
-    // while (tree[runningIndex]) {
-    //   const nextNodeIndex = runningIndex * 2 + 1;
-    //   if (tree[nextNodeIndex]) {
-    //     // w i p
-    //   }
-    // }
+    const curIndex = this.traverseTree(val, "exactMatch");
+    this.tree[curIndex] = null;
+    const filterTree = this.tree.filter((v) => v);
+    this.tree = [];
+    filterTree.forEach((v) => {
+      this.addNode(v);
+    });
+    console.log("new tree is:", this.tree);
   }
 
   searchNode(val) {
