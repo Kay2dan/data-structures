@@ -4,7 +4,8 @@
   "description": "",
   "main": "BST.js",
   "scripts": {
-    "bst": "node_modules/nodemon/bin/nodemon.js BST.js"
+    "bst": "node_modules/nodemon/bin/nodemon.js BST.js",
+    "hashtable": "node_modules/nodemon/bin/nodemon.js HashTable.js"
   },
   "author": "",
   "license": "ISC",
