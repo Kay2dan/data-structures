@@ -1,18 +1,25 @@
+/* 
+  Hash Table
+  An implementation of a hash table,
+  where, in case of collision, we add the 
+  elements into an child array. The array expands
+  as more elements as added to this collection.
+ */
+
 class HashTable {
   constructor(tableLength) {
     this.table = new Array(tableLength);
     this.tableLength = tableLength;
   }
 
-  hashFunc(val) {
+  calcHash(val) {
     const length = val.length;
-    const i = (length * 59) % this.tableLength;
-    return i;
+    return (length * 59) % this.tableLength;
   }
 
   add(val) {
     const { table } = this;
-    const i = this.hashFunc(val);
+    const i = this.calcHash(val);
     if (Array.isArray(table[i])) {
       table[i] = [...table[i], val];
     } else if (table[i] !== undefined) {
@@ -22,31 +29,58 @@ class HashTable {
     }
   }
 
-  remove(val) {
-    const i = this.hashFunc(val);
-    const ref = this.table[i];
-    console.log("ref:", ref);
-    if (Array.isArray(ref)) {
-      const ele = ref.find((v) => v === val);
-      console.log("ele:", ele);
+  find(val) {
+    const i = this.calcHash(val);
+    console.log("length: ", this.tableLength, this.table[i]);
+    let cellRef;
+    if (this.table[i] === val) {
+      console.log(`"${val}" found at index ${i}`);
+    } else if (Array.isArray(this.table[i])) {
+      this.table[i].find((v, j) => {
+        if (v === val) {
+          cellRef = j;
+        }
+      });
+      if (cellRef) {
+        console.log(`"${val}", found at index: ${`${i}[${cellRef}]`}`);
+      } else {
+        console.log(`"${val}" not found!`);
+      }
+    } else {
+      console.log(`"${val}" not found!`);
     }
   }
 
-  find(val) {
-    const i = this.hashFunc(val);
-    console.log(`"${val}", found at index: ${i}`);
+  remove(val) {
+    const i = this.calcHash(val);
+    const ref = this.table[i];
+    if (false && !Array.isArray(ref)) {
+      console.log("Removed val:", ref);
+    }
+    if (Array.isArray(ref)) {
+      const ele = ref.find((v) => {
+        if (v === val) {
+          v = null;
+        }
+      });
+      console.log("Removed ele:", ele);
+    }
   }
 }
 
-const hasht1 = new HashTable(10);
-console.log("hasht1: ", hasht1);
-hasht1.add("salaam");
-hasht1.add("I am capable");
-hasht1.add("I can do it!");
-hasht1.add("I am blessed!");
-hasht1.add("I am blessed to have a gentle wife!");
-hasht1.add("I am blessed immeasurably");
-hasht1.add("I am ok!");
-hasht1.remove("I am ok!");
-console.log("hasht1 is: ", hasht1);
-hasht1.find("I am blessed immeasurably");
+// TESTS //
+
+const h1 = new HashTable(10);
+console.log("h1: ", h1);
+h1.add("salaam");
+h1.add("I am capable");
+h1.add("I can do it!");
+h1.add("I am blessed!");
+h1.add("I am blessed to have a gentle wife!");
+h1.add("I am blessed immeasurably");
+h1.add("I am ok!");
+// h1.remove("I am ok!");
+console.log("h1 is: ", h1);
+h1.find("I am blessed immeasurably");
+h1.find("I am ok!");
+h1.find("I am not ok!");
