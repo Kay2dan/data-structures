@@ -5,7 +5,8 @@
   "main": "BST.js",
   "scripts": {
     "bst": "node_modules/nodemon/bin/nodemon.js BST.js",
-    "hashtable": "node_modules/nodemon/bin/nodemon.js HashTable.js"
+    "hashtablechaining": "node_modules/nodemon/bin/nodemon.js HashTable_Chaining.js",
+    "hashtablelinearprobe": "node_modules/nodemon/bin/nodemon.js HashTable_LinearProbe.js"
   },
   "author": "",
   "license": "ISC",
