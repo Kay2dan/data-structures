@@ -4,7 +4,16 @@
   where, in case of collision, we add the 
   elements into an child array. The array expands
   as more elements as added to this collection.
- */
+  The class takes a number upon initialisation,
+  which creates an array of fixed side. The length
+  is also used in the `calcHash` func to calculate
+  the hash for each entry in the collection (array).
+  
+  There are three operations on the hash collection:
+  - *.add(arg) - add a value
+  - *.find(arg) - search for a value
+  - *.remove(arg) = remove the arg from collection
+*/
 
 class HashTable {
   constructor(tableLength) {
@@ -12,6 +21,7 @@ class HashTable {
     this.tableLength = tableLength;
   }
 
+  // internal func to calc the hash
   calcHash(val) {
     const length = val.length;
     return (length * 59) % this.tableLength;
@@ -29,41 +39,52 @@ class HashTable {
     }
   }
 
-  find(val) {
+  // internal func to match argument against collection
+  matchValue(val) {
     const i = this.calcHash(val);
-    console.log("length: ", this.tableLength, this.table[i]);
     let cellRef;
     if (this.table[i] === val) {
-      console.log(`"${val}" found at index ${i}`);
+      return [true, i];
     } else if (Array.isArray(this.table[i])) {
+      // we search for the index
       this.table[i].find((v, j) => {
         if (v === val) {
           cellRef = j;
         }
       });
       if (cellRef) {
-        console.log(`"${val}", found at index: ${`${i}[${cellRef}]`}`);
+        return [true, i, cellRef];
       } else {
-        console.log(`"${val}" not found!`);
+        return [false];
       }
     } else {
-      console.log(`"${val}" not found!`);
+      return [false];
+    }
+  }
+
+  find(val) {
+    const position = this.matchValue(val);
+    if (position[0]) {
+      console.log(
+        `"${val}", found at index: ${position[1]}${
+          position[2] ? `[${position[2]}]` : ""
+        }`
+      );
+    } else {
+      console.log(`"${val}" *not* found!`);
     }
   }
 
   remove(val) {
-    const i = this.calcHash(val);
-    const ref = this.table[i];
-    if (false && !Array.isArray(ref)) {
-      console.log("Removed val:", ref);
-    }
-    if (Array.isArray(ref)) {
-      const ele = ref.find((v) => {
-        if (v === val) {
-          v = null;
-        }
-      });
-      console.log("Removed ele:", ele);
+    const position = this.matchValue(val);
+    console.log("pos", position);
+    if (position[0]) {
+      if (position[2]) {
+        this.table[position[1]][position[2]] = undefined;
+      } else {
+        this.table[position[1]] = undefined;
+      }
+      this.table;
     }
   }
 }
@@ -78,9 +99,10 @@ h1.add("I can do it!");
 h1.add("I am blessed!");
 h1.add("I am blessed to have a gentle wife!");
 h1.add("I am blessed immeasurably");
-h1.add("I am ok!");
-// h1.remove("I am ok!");
+h1.add("I like fish!");
 console.log("h1 is: ", h1);
 h1.find("I am blessed immeasurably");
 h1.find("I am ok!");
 h1.find("I am not ok!");
+h1.remove("I like fish!");
+console.log("after removal: ", h1);
