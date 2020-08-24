@@ -1,7 +1,8 @@
 /* 
-  Hash Table
+  HASH TABLE - CHAINING
   An implementation of a hash table,
-  where, in case of collision, we add the 
+  where, in case of collision, we resolve the
+  collision through chaining, i.e. we add the 
   elements into an child array. The array expands
   as more elements as added to this collection.
   The class takes a number upon initialisation,

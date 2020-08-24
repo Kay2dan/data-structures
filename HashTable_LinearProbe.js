@@ -1,13 +1,7 @@
 /* 
-  Hash Table
+  HASH TABLE - LINEAR PROBING
   An implementation of a hash table,
-  where, in case of collision, we add the 
-  elements into an child array. The array expands
-  as more elements as added to this collection.
-  The class takes a number upon initialisation,
-  which creates an array of fixed side. The length
-  is also used in the `calcHash` func to calculate
-  the hash for each entry in the collection (array).
+  where, in case of collision,
   
   There are three operations on the hash collection:
   - *.add(arg) - add a value
@@ -16,27 +10,39 @@
 */
 
 class HashTable {
-  constructor(tableLength) {
-    this.table = new Array(tableLength);
-    this.tableLength = tableLength;
+  constructor() {
+    this.table = new Array(10);
   }
 
   // internal func to calc the hash
+  // modulus is set at 1000, i.e, the array has
+  // a length of 1000 at max.
+  // The prime number `59` is an arbitrary number
   calcHash(val) {
-    const length = val.length;
-    return (length * 59) % this.tableLength;
+    let sum = 0;
+    for (let i = 0; i < val.length; i++) {
+      sum += val.charCodeAt(i);
+    }
+    return (sum * 59) % 10;
   }
 
+  // First we calc the hash from the string
+  // Then, if we encounter another value with the
+  // same hash, we run a loop to find the next empty
+  // space. To ensure we only loop over the size
+  // of the collection, we use modulus.
   add(val) {
-    const { table } = this;
-    const i = this.calcHash(val);
-    if (Array.isArray(table[i])) {
-      table[i] = [...table[i], val];
-    } else if (table[i] !== undefined) {
-      table[i] = [table[i], val];
-    } else {
-      table[i] = val;
+    const { table, calcHash } = this;
+    const i = calcHash(val);
+    let j = 0;
+    console.log("specifics : ", val, "; i:", i);
+    if (table[i] !== undefined) {
+      while (table[(i + j) % 10] !== undefined) {
+        console.log(val, " --- mod:", (i + j) % 10, "j: ", j);
+        ++j;
+      }
     }
+    table[(i + j) % 10] = val;
   }
 
   // internal func to match argument against collection
@@ -91,18 +97,19 @@ class HashTable {
 
 // TESTS //
 
-const h1 = new HashTable(10);
-console.log("h1: ", h1);
+const h1 = new HashTable();
+console.log("h1 upon initialisation: ", h1);
 h1.add("salaam");
 h1.add("I am capable");
 h1.add("I can do it!");
 h1.add("I am blessed!");
 h1.add("I am blessed to have a gentle wife!");
 h1.add("I am blessed immeasurably");
+h1.add("salaam");
 h1.add("I like fish!");
 console.log("h1 is: ", h1);
-h1.find("I am blessed immeasurably");
-h1.find("I am ok!");
-h1.find("I am not ok!");
-h1.remove("I like fish!");
-console.log("after removal: ", h1);
+// h1.find("I am blessed immeasurably");
+// h1.find("I am not cool!");
+// h1.find("I am not ok!");
+// h1.remove("I like fish!");
+// console.log("after removal: ", h1);
