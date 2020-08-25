@@ -10,20 +10,22 @@
 */
 
 class HashTable {
-  constructor() {
-    this.table = new Array(10);
+  constructor(length) {
+    this.tableLength = length;
+    this.table = new Array(length);
+    this.calcHash = this.calcHash.bind(this);
   }
 
   // internal func to calc the hash
-  // modulus is set at 1000, i.e, the array has
-  // a length of 1000 at max.
+  // modulus is set at length00, i.e, the array has
+  // a length of length00 at max.
   // The prime number `59` is an arbitrary number
   calcHash(val) {
     let sum = 0;
     for (let i = 0; i < val.length; i++) {
       sum += val.charCodeAt(i);
     }
-    return (sum * 59) % 10;
+    return (sum * 59) % this.tableLength;
   }
 
   // First we calc the hash from the string
@@ -32,73 +34,62 @@ class HashTable {
   // space. To ensure we only loop over the size
   // of the collection, we use modulus.
   add(val) {
-    const { table, calcHash } = this;
+    const { table, tableLength, calcHash } = this;
     const i = calcHash(val);
     let j = 0;
-    console.log("specifics : ", val, "; i:", i);
     if (table[i] !== undefined) {
-      while (table[(i + j) % 10] !== undefined) {
-        console.log(val, " --- mod:", (i + j) % 10, "j: ", j);
+      while (table[(i + j) % tableLength] !== undefined) {
         ++j;
       }
     }
-    table[(i + j) % 10] = val;
+    table[(i + j) % tableLength] = val;
   }
 
   // internal func to match argument against collection
   matchValue(val) {
-    const i = this.calcHash(val);
-    let cellRef;
-    if (this.table[i] === val) {
+    const { table, tableLength, calcHash } = this;
+    const i = calcHash(val);
+    let j = 0;
+    if (table[i] === val) {
       return [true, i];
-    } else if (Array.isArray(this.table[i])) {
-      // we search for the index
-      this.table[i].find((v, j) => {
-        if (v === val) {
-          cellRef = j;
-        }
-      });
-      if (cellRef) {
-        return [true, i, cellRef];
+    } else {
+      while (table[i + j] !== val && j < tableLength) {
+        ++j;
+      }
+      if (table[i + j] === val) {
+        return [true, i + j];
       } else {
         return [false];
       }
-    } else {
-      return [false];
     }
   }
 
   find(val) {
-    const position = this.matchValue(val);
-    if (position[0]) {
-      console.log(
-        `"${val}", found at index: ${position[1]}${
-          position[2] ? `[${position[2]}]` : ""
-        }`
-      );
+    const searchResult = this.matchValue(val);
+    if (searchResult[0]) {
+      console.log(`"${val}" found at index: ${searchResult[1]}`);
     } else {
-      console.log(`"${val}" *not* found!`);
+      console.log(`"${val}" NOT found :(`);
     }
   }
 
   remove(val) {
-    const position = this.matchValue(val);
-    console.log("pos", position);
-    if (position[0]) {
-      if (position[2]) {
-        this.table[position[1]][position[2]] = undefined;
-      } else {
-        this.table[position[1]] = undefined;
-      }
-      this.table;
+    const searchResult = this.matchValue(val);
+    console.log("searchResult:", searchResult);
+    if (searchResult[0]) {
+      this.table[searchResult[1]] = undefined;
+      console.log(`"${val}" at index: ${searchResult[1]} removed`);
+    } else {
+      console.log(`"${val}" NOT found, so not deleted :(`);
     }
   }
 }
 
 // TESTS //
 
-const h1 = new HashTable();
+const h1 = new HashTable(20);
 console.log("h1 upon initialisation: ", h1);
+console.log("--------- ADD ---------");
 h1.add("salaam");
 h1.add("I am capable");
 h1.add("I can do it!");
@@ -108,8 +99,10 @@ h1.add("I am blessed immeasurably");
 h1.add("salaam");
 h1.add("I like fish!");
 console.log("h1 is: ", h1);
-// h1.find("I am blessed immeasurably");
-// h1.find("I am not cool!");
-// h1.find("I am not ok!");
-// h1.remove("I like fish!");
-// console.log("after removal: ", h1);
+console.log("--------- FIND ----------");
+h1.find("I am blessed immeasurably");
+h1.find("I am not cool!");
+h1.find("I am not ok!");
+console.log("--------- REMOVE ----------");
+h1.remove("I like fish!");
+console.log("after removal: ", h1);
