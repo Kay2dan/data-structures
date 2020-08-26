@@ -1,8 +1,10 @@
 /* 
   HASH TABLE - LINEAR PROBING
   An implementation of a hash table,
-  where, in case of collision,
-  
+  where, in case of collision, we map over the remaining
+  collection (starting from the calculated hash position
+  onwards) till we find the value in the collection.
+
   There are three operations on the hash collection:
   - *.add(arg) - add a value
   - *.find(arg) - search for a value
@@ -16,7 +18,7 @@ class HashTable {
     this.calcHash = this.calcHash.bind(this);
   }
 
-  // internal func to calc the hash
+  // Internal func to calc the hash
   // modulus is set at length00, i.e, the array has
   // a length of length00 at max.
   // The prime number `59` is an arbitrary number
