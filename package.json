@@ -5,9 +5,9 @@
   "main": "BST.js",
   "scripts": {
     "bst": "node_modules/nodemon/bin/nodemon.js BST.js",
-    "hashtablechaining": "node_modules/nodemon/bin/nodemon.js HashTable_Chaining.js",
-    "hashtablelinearprobe": "node_modules/nodemon/bin/nodemon.js HashTable_LinearProbe.js",
-    "queue": "node_modules/nodemon/bin/nodemon.js Queue.js"
+    "hashtablechaining": "node_modules/nodemon/bin/nodemon.js src/HashTable_Chaining.js",
+    "hashtablelinearprobe": "node_modules/nodemon/bin/nodemon.js src/HashTable_LinearProbe.js",
+    "queue": "node_modules/nodemon/bin/nodemon.js src/Queue.js"
   },
   "author": "",
   "license": "ISC",
