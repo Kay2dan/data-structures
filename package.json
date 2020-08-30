@@ -4,10 +4,11 @@
   "description": "",
   "main": "BST.js",
   "scripts": {
-    "bst": "node_modules/nodemon/bin/nodemon.js BST.js",
+    "bst": "node_modules/nodemon/bin/nodemon.js src/BST.js",
     "hashtablechaining": "node_modules/nodemon/bin/nodemon.js src/HashTable_Chaining.js",
     "hashtablelinearprobe": "node_modules/nodemon/bin/nodemon.js src/HashTable_LinearProbe.js",
-    "queue": "node_modules/nodemon/bin/nodemon.js src/Queue.js"
+    "queue": "node_modules/nodemon/bin/nodemon.js src/Queue.js",
+    "priorityqueue": "node_modules/nodemon/bin/nodemon.js src/PriorityQueues.js"
   },
   "author": "",
   "license": "ISC",
