@@ -12,7 +12,6 @@ class PriorityQueue {
   }
 
   getParentNodeIndex(i) {
-    console.log(i);
     if (i % 2) {
       return (i - 1) / 2;
     } else {
@@ -23,18 +22,14 @@ class PriorityQueue {
   insert(val) {
     const { queue } = this;
     const length = queue.push(val);
-    console.log("length of queue:", length);
     if (length !== 1) {
       const parentNodeIndex = this.getParentNodeIndex(length - 1);
-      console.log("parentNodeIndex:", parentNodeIndex);
-      // while (parentNodeIndex >= 0) {
-      let parentVal = queue[parentNodeIndex];
-      console.log("parentnode:", parentVal);
-      if (val < parentVal) {
+      while (val < queue[parentNodeIndex]) {
+        let parentVal = queue[parentNodeIndex];
+        console.log("parentnode:", parentNodeIndex, parentVal);
         queue[parentNodeIndex] = val;
         queue[length - 1] = parentVal;
       }
-      // }
     }
   }
 
@@ -58,4 +53,8 @@ pq1.insert(23);
 console.log("=======queue", pq1);
 console.log("--------About to insert: 7");
 pq1.insert(7);
+console.log("=======queue", pq1);
+pq1.insert(60);
+console.log("=======queue", pq1);
+pq1.insert(2);
 console.log("=======queue", pq1);
