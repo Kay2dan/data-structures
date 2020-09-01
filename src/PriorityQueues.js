@@ -23,12 +23,15 @@ class PriorityQueue {
     const { queue } = this;
     const length = queue.push(val);
     if (length !== 1) {
-      const parentNodeIndex = this.getParentNodeIndex(length - 1);
+      let currentValIndex = length - 1;
+      let parentNodeIndex = this.getParentNodeIndex(currentValIndex);
       while (val < queue[parentNodeIndex]) {
         let parentVal = queue[parentNodeIndex];
         console.log("parentnode:", parentNodeIndex, parentVal);
         queue[parentNodeIndex] = val;
-        queue[length - 1] = parentVal;
+        queue[currentValIndex] = parentVal;
+        currentValIndex = parentNodeIndex;
+        parentNodeIndex = this.getParentNodeIndex(parentNodeIndex);
       }
     }
   }
@@ -80,19 +83,17 @@ const pq1 = new PriorityQueue();
 // console.log("=======queue", pq1);
 // console.log("--------About to insert: 3");
 pq1.insert(3);
-// console.log("=======queue", pq1);
-// console.log("--------About to insert: 10");
 pq1.insert(10);
-// console.log("=======queue", pq1);
-// console.log("--------About to insert: 23");
 pq1.insert(23);
-// console.log("=======queue", pq1);
-// console.log("--------About to insert: 7");
 pq1.insert(7);
-// console.log("=======queue", pq1);
-pq1.insert(60);
-// console.log("=======queue", pq1);
+pq1.insert(11);
+pq1.insert(5);
+pq1.insert(13);
+pq1.insert(50);
 pq1.insert(2);
 console.log("=======queue", pq1);
-pq1.poll();
-console.log("=======queue", pq1);
+// pq1.poll();
+// pq1.poll();
+// pq1.poll();
+// pq1.poll();
+// console.log("=======queue", pq1);
