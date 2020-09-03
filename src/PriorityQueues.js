@@ -7,7 +7,11 @@
    Insertion: The process of adding a value to the collection
    based on its priority.
    Polling: The process of removal of the value of the highest
-   priority. */
+   priority.
+   Please note, I have not covered the removal of a value from
+   the collection because that would involve using hashes in 
+   order to efficenctly find & remove the value. Hash Tables
+   is covered in an another file. */
 
 class PriorityQueue {
   constructor() {
