@@ -1,3 +1,14 @@
+/* A priority queue is a data-structure,
+   where data is organised based on priority, affiliated with
+   it. The goal is that every time we poll (the process of 
+   dealing with a queue item), we should get the value with 
+   the highest priority.
+   There are two terms generally used with priority queues:
+   Insertion: The process of adding a value to the collection
+   based on its priority.
+   Polling: The process of removal of the value of the highest
+   priority. */
+
 class PriorityQueue {
   constructor() {
     this.queue = [];
@@ -27,7 +38,6 @@ class PriorityQueue {
       let parentNodeIndex = this.getParentNodeIndex(currentValIndex);
       while (val < queue[parentNodeIndex]) {
         let parentVal = queue[parentNodeIndex];
-        // console.log("parentnode:", parentNodeIndex, parentVal);
         queue[parentNodeIndex] = val;
         queue[currentValIndex] = parentVal;
         currentValIndex = parentNodeIndex;
@@ -58,17 +68,6 @@ class PriorityQueue {
     let leftChildNodeVal = queue[leftChildNodeIndex];
     let rightChildNodeIndex = this.getRightChildNodeIndex(replacedValIndex);
     let rightChildNodeVal = queue[rightChildNodeIndex];
-    console.log(
-      "node's immediate tree:",
-      replacedValIndex,
-      replacedVal,
-      "; left child: ",
-      leftChildNodeIndex,
-      leftChildNodeVal,
-      "; right child: ",
-      rightChildNodeIndex,
-      rightChildNodeVal
-    );
     while (
       (replacedVal > leftChildNodeVal) |
       (replacedVal > rightChildNodeVal)
@@ -93,10 +92,6 @@ class PriorityQueue {
     }
     console.log("Polled val:", topPriority);
   }
-
-  remove() {}
-
-  find() {}
 }
 
 // TESTS //
