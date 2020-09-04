@@ -8,7 +8,8 @@
     "hashtablechaining": "node_modules/nodemon/bin/nodemon.js src/HashTable_Chaining.js",
     "hashtablelinearprobe": "node_modules/nodemon/bin/nodemon.js src/HashTable_LinearProbe.js",
     "queue": "node_modules/nodemon/bin/nodemon.js src/Queue.js",
-    "priorityqueue": "node_modules/nodemon/bin/nodemon.js src/PriorityQueues.js"
+    "priorityqueue": "node_modules/nodemon/bin/nodemon.js src/PriorityQueues.js",
+    "unionfind": "node_modules/nodemon/bin/nodemon.js src/UnionFind.js"
   },
   "author": "",
   "license": "ISC",
