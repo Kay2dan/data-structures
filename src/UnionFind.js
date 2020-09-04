@@ -12,6 +12,7 @@ class UnionFind {
       this.collection[v] = {
         val: v,
         parent: null,
+        size: 0,
       };
     });
   }
@@ -33,6 +34,11 @@ class UnionFind {
       val2ObjParent = collection[val2ObjParent].parent;
     }
     console.log("parents: ", val1ObjParent, val2ObjParent);
+    if (val1ObjParent === val2ObjParent) {
+      val2ObjParent.parent = val1ObjParent;
+      // val2ObjParent.size =
+    } else {
+    }
   }
 
   find() {}
@@ -41,4 +47,3 @@ class UnionFind {
 const collection = ["b", "f", "c", "q", "w", "p", "g", "j", "l", "u", "y", "a"];
 const uf1 = new UnionFind(collection);
 uf1.union("b", "c");
-console.log("obj: ", uf1);
