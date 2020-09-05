@@ -12,20 +12,19 @@ class UnionFind {
       this.collection[v] = {
         val: v,
         parent: null,
-        size: 0,
+        connectedNodesSize: 0,
       };
     });
   }
 
   union(val1, val2) {
     const { collection } = this;
-    console.log("this.collection: ", this.collection);
     console.log("val1 & val2: ", val1, val2);
-    // find parent of val1 & val2
     const val1Obj = collection[val1];
     const val2Obj = collection[val2];
     const val1ObjParent = val1Obj.parent;
     const val2ObjParent = val2Obj.parent;
+    // Note: we dont need the following `while` loops in path compression
     // loop to find the parent node
     while (val1ObjParent && collection[val1ObjParent].parent) {
       val1ObjParent = collection[val1ObjParent].parent;
@@ -33,17 +32,34 @@ class UnionFind {
     while (val2ObjParent && collection[val2ObjParent].parent) {
       val2ObjParent = collection[val2ObjParent].parent;
     }
-    console.log("parents: ", val1ObjParent, val2ObjParent);
-    if (val1ObjParent === val2ObjParent) {
+    if (val1ObjParent && val1ObjParent === val2ObjParent) {
       val2ObjParent.parent = val1ObjParent;
-      // val2ObjParent.size =
+      val1Obj.connectedNodesSize += 1;
     } else {
+      if (val2Obj.connectedNodesSize > val1Obj.connectedNodesSize) {
+        val2Obj.parent = val1Obj.val;
+        val2Obj.connectedNodesSize += 1;
+      } else {
+        val1Obj.parent = val2Obj.val;
+        val1Obj.connectedNodesSize += 1;
+      }
     }
   }
 
-  find() {}
+  find(val) {
+    const { parent } = this.collection[val];
+    console.log("parent val: ", parent);
+    return val;
+  }
 }
 
 const collection = ["b", "f", "c", "q", "w", "p", "g", "j", "l", "u", "y", "a"];
 const uf1 = new UnionFind(collection);
+console.log("uf1: ", uf1);
 uf1.union("b", "c");
+console.log("uf1: ", uf1);
+uf1.union("f", "q");
+console.log("uf1: ", uf1);
+uf1.union("c", "f");
+console.log("uf1: ", uf1);
+uf1.find("b");
