@@ -5,6 +5,7 @@
   "main": "BST.js",
   "scripts": {
     "bst": "node_modules/nodemon/bin/nodemon.js src/BST.js",
+    "tree": "node_modules/nodemon/bin/nodemon.js src/Tree.js",
     "hashtablechaining": "node_modules/nodemon/bin/nodemon.js src/HashTable_Chaining.js",
     "hashtablelinearprobe": "node_modules/nodemon/bin/nodemon.js src/HashTable_LinearProbe.js",
     "queue": "node_modules/nodemon/bin/nodemon.js src/Queue.js",
